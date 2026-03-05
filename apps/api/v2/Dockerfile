@@ -16,7 +16,9 @@ ENV USE_POOL="true"
 
 COPY . .
 
-RUN yarn install
+RUN apk add --no-cache python3 make g++ && \
+  yarn install && \
+  apk del python3 make g++
 RUN yarn workspace @calcom/api-v2 run generate-schemas
 RUN yarn workspace @calcom/api-v2 run build:docker
 RUN yarn workspace @calcom/api-v2 run build
